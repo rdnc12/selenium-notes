@@ -4,6 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.util.List;
+
 public class LocatorsIntro {
 //    Create a class : LocatorsIntro
 //    Create main method and complete the following task.
@@ -14,10 +17,10 @@ public class LocatorsIntro {
 //    Password : Test1234!
 //    Then verify that the expected user id  testtechproed@gmail.com
 //    Verify the Addresses and Sign Out  texts are displayed
-//    Find the number of total link on the page
+//    Find the number of total link on the pagea
 //    Sign out from the page
     public static void main(String[] args) throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver","/Users/techproed/Documents/selenium libraries/drivers/chromedriver");
+        System.setProperty("webdriver.chrome.driver","C:\\Users\\HKLAHR\\selenium dependencies\\drivers\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         //    user goes to http://a.testaddressbook.com/sign_in
         driver.get("http://a.testaddressbook.com/sign_in");
@@ -40,6 +43,57 @@ public class LocatorsIntro {
         Thread.sleep(3000);
         //click on sign in button
         signinButton.click();
+
+        //    Then verify that the expected user id testtechproed@gmail.com
+        String expectedUserIDText="testtechproed@gmail.com";
+        WebElement actualUserID= driver.findElement(By.className("navbar-text"));//WebElement: We are not going to get the text when we print
+        //System.out.println(actualUserID);//This gives me the webelement reference:[[ChromeDriver: chrome on MAC (c370c8652f23fb7a99565e14354798cf)] -> class name: navbar-text]
+        String actualUserIDText=actualUserID.getText();//testtechproed@gmail.com
+        if (actualUserIDText.equals(expectedUserIDText)){
+            System.out.println("PASS");
+        }else{
+            System.out.println("FAILS");
+            System.out.println("ACTUAL ID : "+actualUserIDText);
+            System.out.println("EXPECTED ID : "+expectedUserIDText);
+        }
+        //    Verify the Addresses and Sign Out texts are displayed
+        String expectedAddressText="Addresses";
+        //Locating the actual address
+        WebElement actualAddress= driver.findElement(By.linkText("Addresses"));
+        String actualAddressText=actualAddress.getText();
+        if(expectedAddressText.equals(actualAddressText)){
+            System.out.println("PASS");
+        }else{
+            System.out.println("FAIL");
+            System.out.println("ACTUAL : "+actualAddressText);
+            System.out.println("EXPECTED : "+expectedAddressText);
+        }
+        //Locating the sign out element
+        //<a class="nav-item nav-link" data-test="sign-out" rel="nofollow" data-method="delete" href="/sign_out">Sign out</a>
+        //When we use linkText or partialLinkText, we pass the TEXT, NOT THE VALUE
+        String expectedSignOutText="Sign Out";
+//    WebElement signOut=driver.findElement(By.linkText("Sign out"));
+        WebElement signOut=driver.findElement(By.partialLinkText("ign ou"));
+        String actualSignOutText=signOut.getText();
+        if (expectedSignOutText.equals(actualSignOutText)){
+            System.out.println("PASS");
+        }else{
+            System.out.println("FAILS");
+            System.out.println("ACTUAL : "+actualSignOutText);
+            System.out.println("EXPECTED : "+expectedSignOutText);
+        }
+        //We found a bug: actual is Sign out, but expected is Sign Out.
+        //We need to take the screenshot of the webpage and report this to the developer first
+        // Find the number of total link on the page
+        // a tag creates link on a page. We need to find how many a tag on the page
+        //To find how many a TAG on th page, we can use tagName("a"); locator
+        List<WebElement> numberOfLink=driver.findElements(By.tagName("a"));//We are expecting to get multiple elements. For this reason, we use findElements() method for tagName locator
+        int countOfLink=numberOfLink.size();
+        System.out.println("Number Of Link : "+countOfLink);
+        for (WebElement element:numberOfLink){
+            System.out.println(element.getText());
+        }
+
     }
 }
 

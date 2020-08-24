@@ -3,6 +3,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+/*XPATH CSS LOCATOR
+========
+NOTE: If tehre is duplicate attribute,key pairs, we should not use that as a locator.
+In this example we have duplicate name : name="session[password]"
+If we use it, we will NOT get any exception because there is a matching elemennt on the webpage.
+But we always get the 1st mathcing element.*/
 
 public class Xpath_css {
     public static void main(String[] args) throws InterruptedException {
